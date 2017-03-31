@@ -135,4 +135,24 @@ public class Doc {
     public void setId(String id) {
         this.id = id;
     }
+
+    public boolean hasImage() {
+        return this.getImageAddress() != null;
     }
+
+    public String getImageAddress() {
+        for (String subtype : new String[]{ "xlarge", "wide", "thumbnail"}) {
+            for (Multimedium m : this.getMultimedia()) {
+                if ("image".equals(m.getType()) && subtype.equals(m.getSubtype())) {
+                    return m.getFullUrl();
+                }
+            }
+        }
+        for (Multimedium m : this.getMultimedia()) {
+            if ("image".equals(m.getType())) {
+                return m.getFullUrl();
+            }
+        }
+        return null;
+    }
+}

@@ -1,9 +1,12 @@
 package com.example.ian_sibner.nytsearch.api;
 
+import android.util.Log;
+
 import com.example.ian_sibner.nytsearch.models.Filters;
 import com.example.ian_sibner.nytsearch.models.NytSearchApiResponse;
 
 import java.io.IOException;
+import java.util.Map;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -42,9 +45,12 @@ public final class NytSearchApi {
                 .build();
     }
 
-    public static void search(Filters filters, Callback<NytSearchApiResponse> cb) {
+    public static void search(Filters filters, int page, Callback<NytSearchApiResponse> cb) {
         NytSearchApiService service = retrofit.create(NytSearchApiService.class);
-        Call<NytSearchApiResponse> call = service.getSearchResults(filters.queryMap());
+        Map<String, String> query = filters.queryMap();
+        Log.d("DEBUG", "Search page " + page);
+        query.put("page", ""  + page);
+        Call<NytSearchApiResponse> call = service.getSearchResults(query);
         call.enqueue(cb);
     }
 }

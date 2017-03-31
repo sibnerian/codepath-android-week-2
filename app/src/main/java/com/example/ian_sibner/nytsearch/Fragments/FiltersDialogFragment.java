@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.example.ian_sibner.nytsearch.R;
@@ -86,8 +87,33 @@ public class FiltersDialogFragment extends DialogFragment
         getDialog().setTitle("Edit Filters");
         setupDatePickerClickListener();
         setupSaveButton();
-        // TODO: setup filters
+        setupFilters();
+    }
 
+    private void setupFilters() {
+        if (this.filters.beginDate != null) {
+            int monthOfYear = this.filters.beginDate.get(Calendar.MONTH);
+            int dayOfMonth = this.filters.beginDate.get(Calendar.DAY_OF_MONTH);
+            int year = this.filters.beginDate.get(Calendar.YEAR);
+            tvPickBeginDate.setText((monthOfYear + 1) + " / " + dayOfMonth + " / " + year);
+        }
+        setSpinnerToValue(spnrSortOrder, filters.sortOrder);
+        if (filters.newsDesks != null) {
+            chkbxArts.setChecked(filters.newsDesks.contains("Arts"));
+            chkbxFashion.setChecked(filters.newsDesks.contains("Fashion"));
+            chkbxSports.setChecked(filters.newsDesks.contains("Sports"));
+        }
+    }
+
+    private void setSpinnerToValue(Spinner spinner, String value) {
+        int index = 0;
+        SpinnerAdapter adapter = spinner.getAdapter();
+        for (int i = 0; i < adapter.getCount(); i++) {
+            if (adapter.getItem(i).equals(value)) {
+                index = i;
+            }
+        }
+        spinner.setSelection(index);
     }
 
     private void setupDatePickerClickListener() {
@@ -98,9 +124,7 @@ public class FiltersDialogFragment extends DialogFragment
                 FragmentManager fm = getFragmentManager();
                 datePickerDialogFragment = new DatePickerDialogFragment();
                 Bundle args = new Bundle();
-                args.putInt("year", filters.beginDate.get(Calendar.YEAR));
-                args.putInt("month", filters.beginDate.get(Calendar.MONTH));
-                args.putInt("day", filters.beginDate.get(Calendar.DAY_OF_MONTH));
+                args.putSerializable("calendar", filters.beginDate);
                 datePickerDialogFragment.setArguments(args);
                 datePickerDialogFragment.setListener(listener);
                 datePickerDialogFragment.show(fm, "fragment_select_begin_date");

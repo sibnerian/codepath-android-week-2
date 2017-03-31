@@ -50,7 +50,7 @@ public class Filters {
 
     public Map<String,String> queryMap() {
         HashMap<String, String> result = new HashMap<>();
-        if (query != null) {
+        if (query != null && !"".equals(query.trim())) {
             result.put("q", query);
         }
         result.put("sort", sortOrder == null ? "newest" : sortOrder);
