@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content"
+    android:minWidth="400dp"
+    android:id="@+id/edit_filters"
+>
+    <TextView
+        android:id="@+id/lbl_begin_date" android:text="@string/begin_date"
+        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_pick_begin_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pick_a_date"
+    />
+
+    <TextView
+        android:id="@+id/lbl_sort_type" android:text="@string/sort_by"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <Spinner
+        android:id="@+id/spnr_sort_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/sort_types"
+        android:prompt="@string/sort_by"
+    />
+
+    <TextView
+        android:id="@+id/lbl_news_desks" android:text="News desks"
+        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <CheckBox android:id="@+id/checkbox_arts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/arts" />
+        <CheckBox android:id="@+id/checkbox_fashion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fashion_amp_style" />
+        <CheckBox android:id="@+id/checkbox_sports"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sports" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:id="@+id/btnSave"
+    />
+
+</LinearLayout>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">OMG NYT</string>
+    <string name="search_hint">Enter search query</string>
+    <string name="search_btn">Search</string>
+    <string name="begin_date">Begin date</string>
+    <string name="sort_by">Sort by</string>
+    <string name="arts">Arts</string>
+    <string name="fashion_amp_style"><![CDATA[Fashion & style]]></string>
+    <string name="sports">Sports</string>
+    <string name="save">Save</string>
+    <string name="pick_a_date">Pick a date</string>
+</resources>
