@@ -1,5 +1,6 @@
 package com.example.ian_sibner.nytsearch;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -13,8 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.example.ian_sibner.nytsearch.Fragments.FiltersDialogFragment;
 import com.example.ian_sibner.nytsearch.adapters.ArticlesAdapter;
 import com.example.ian_sibner.nytsearch.api.NytSearchApi;
@@ -42,6 +46,7 @@ public class SearchActivity extends AppCompatActivity {
     ArrayList<Doc> articles = new ArrayList<>();
     ArticlesAdapter articlesAdapter;
     RecyclerView recyclerView;
+    ImageView loadingView;
     EndlessRecyclerViewScrollListener scrollListener;
 
     @Override
@@ -54,6 +59,10 @@ public class SearchActivity extends AppCompatActivity {
 
     public void onArticleSearch(final int page) {
         filters.setQuery( this.etSearchInput.getText().toString());
+        loadingView.setVisibility(View.VISIBLE);
+        Glide.with(this)
+                .load(R.raw.loading_dots)
+                .into(new GlideDrawableImageViewTarget(loadingView));
 
         // Damn rate limit
         AsyncTask.execute(new Runnable() {
@@ -78,6 +87,7 @@ public class SearchActivity extends AppCompatActivity {
                         List<Doc> newItems = body.getResponse().getDocs();
                         articles.addAll(newItems);
                         articlesAdapter.notifyItemRangeInserted(curSize, newItems.size());
+                        loadingView.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -88,6 +98,7 @@ public class SearchActivity extends AppCompatActivity {
                                 "There was a big ol’ network error, partner.",
                                 Toast.LENGTH_LONG
                         ).show();
+                        loadingView.setVisibility(View.GONE);
                     }
                 });
             }
@@ -110,8 +121,9 @@ public class SearchActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.etSearchInput = (EditText) findViewById(R.id.etSearchInput);
-        this.btnSearch = (Button) findViewById(R.id.btnSearch);
+        etSearchInput = (EditText) findViewById(R.id.etSearchInput);
+        btnSearch = (Button) findViewById(R.id.btnSearch);
+        loadingView = (ImageView) findViewById(R.id.loading_indicator);
         recyclerView = (RecyclerView) findViewById(R.id.rvArticles);
 
         articlesAdapter = new ArticlesAdapter(this, articles);
@@ -124,7 +136,7 @@ public class SearchActivity extends AppCompatActivity {
             new ItemClickSupport.OnItemClickListener() {
                 @Override
                 public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                    Log.d("DEBUG", "click" + position);
+                    launchArticleWebView(position);
                 }
             }
         );
@@ -135,6 +147,13 @@ public class SearchActivity extends AppCompatActivity {
             }
         };
         recyclerView.addOnScrollListener(scrollListener);
+    }
+
+    public void launchArticleWebView(int position) {
+        String url = articles.get(position).getWebUrl();
+        Intent intent = new Intent(SearchActivity.this, WebviewActivity.class);
+        intent.putExtra("url", url);
+        startActivity(intent);
     }
 
     @Override

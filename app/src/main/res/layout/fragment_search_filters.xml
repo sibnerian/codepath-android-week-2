@@ -5,10 +5,14 @@
     android:layout_height="wrap_content"
     android:minWidth="400dp"
     android:id="@+id/edit_filters"
+    android:padding="16dp"
 >
     <TextView
         android:id="@+id/lbl_begin_date" android:text="@string/begin_date"
-        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#000"
+    />
 
     <TextView
         android:id="@+id/tv_pick_begin_date"
@@ -19,7 +23,10 @@
 
     <TextView
         android:id="@+id/lbl_sort_type" android:text="@string/sort_by"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#000"
+    />
 
     <Spinner
         android:id="@+id/spnr_sort_type"
@@ -31,7 +38,10 @@
 
     <TextView
         android:id="@+id/lbl_news_desks" android:text="News desks"
-        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#000"
+    />
 
     <LinearLayout
         android:orientation="vertical"

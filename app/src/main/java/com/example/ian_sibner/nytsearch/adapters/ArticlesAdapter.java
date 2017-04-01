@@ -45,7 +45,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
                 .load(article.getImageAddress())
                 .fit().centerCrop().noFade()
                 .transform(new RoundedCornersTransformation(10, 10))
-                .placeholder(R.drawable.placeholder)
+                .placeholder(R.drawable.progress_animation)
                 .into(viewHolder.articleMultimediaImageView);
     }
 
